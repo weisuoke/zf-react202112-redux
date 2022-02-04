@@ -11,15 +11,15 @@ function compose(...funcs) {
 }
 
 // 日志中间件
-let logger1 = (store) => next => action => {
+let logger1 = next => action => {
   console.log('logger1')
   next(action)
 }
-let logger2 = (store) => next => action => {
+let logger2 = next => action => {
   console.log('logger2')
   next(action)
 }
-let logger3 = (store) => next => action => {
+let logger3 = next => action => {
   console.log('logger3')
   next(action)
 }
@@ -27,10 +27,13 @@ let logger3 = (store) => next => action => {
 let store = {dispatch() {
     console.log('原生的dispatch')
 }}
-logger1 = logger1(store)
-logger2 = logger2(store)
-logger3 = logger3(store)
+// let composed = compose(logger1, logger2, logger3)
 
-let composed = compose(logger1, logger2, logger3)
+function composed (oldDispatch) {
+  let logger3Next = logger3(oldDispatch)
+  let logger2Next = logger2(logger3Next)
+  let newDispatch = logger1(logger2Next)
+  return newDispatch
+}
 let newDispatch = composed(store.dispatch)
 newDispatch({ type: 'ADD' })
