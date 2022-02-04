@@ -16,7 +16,7 @@ function bindActionCreators(actionCreators, dispatch) {
 
 function bindActionCreator(actionCreator, dispatch) {
   return function (...args) {
-    return dispatch(actionCreator(...args))
+    return dispatch(actionCreator.apply(this, args))
   }
 }
 
