@@ -1,31 +1,20 @@
 import React from 'react'
-import store from "../store";
-import { bindActionCreators } from "../redux";
 import actionCreators from "../store/actionCreators/counter2";
+import {connect} from "../react-redux";
 
-// 把一个 action 创建者对象和 store.dispatch 进行绑定，返回一个新的对象
-const boundActions = bindActionCreators(actionCreators, store.dispatch)
-
-function Counter2() {
-  let [state, setState] = React.useState(store.getState().counter2.number)
-  React.useEffect(() => {
-    store.subscribe(() => {
-      setState(store.getState().counter2.number)
-    })
-  }, [])
-  return (
-    <div>
-      <p>{store.getState().counter2.number}</p>
-      <button onClick={boundActions.add2}>+</button>
-      <button onClick={boundActions.minus2}>-</button>
-    </div>
-  )
+class Counter2 extends React.Component {
+  render() {
+    return (
+      <div>
+        <p>{this.props.number}</p>
+        <button onClick={this.props.add2}>+</button>
+        <button onClick={this.props.minus2}>-</button>
+      </div>
+    );
+  }
 }
 
-export default Counter2
+const mapStateToProps = (state) => state.counter2;  // {number: 0}
 
-/**
- * 组件和仓库有两种关系
- * 一种输入 组件可以从仓库中读取状态数据进行渲染和显示
- * 一种叫输出 可以在组件派发动作，修改仓库中的状态
- */
+// 把仓库中的状态映射为此组件的属性对象
+export default connect(mapStateToProps, actionCreators)(Counter2)
