@@ -10,6 +10,9 @@ function Counter1() {
       <p>{state.number}</p>
       <button onClick={dispatch.add}>+</button>
       <button onClick={dispatch.minus}>-</button>
+      <button onClick={dispatch.thunk}>thunkAdd</button>
+      <button onClick={dispatch.promise1Add}>promise1Add</button>
+      <button onClick={dispatch.promise2Add}>promise2Add</button>
     </div>
   )
 }

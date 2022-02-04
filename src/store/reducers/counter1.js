@@ -8,7 +8,7 @@ import * as actionType from "../action-types";
 function counter1(state = {number: 0}, action) {
   switch (action.type) {
     case actionType.ADD:
-      return { number: state.number + 1 }
+      return { number: state.number + (action?.payload?.amount || 1) }
     case actionType.MINUS:
       return { number: state.number - 1 }
     default:

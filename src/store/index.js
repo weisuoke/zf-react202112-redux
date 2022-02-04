@@ -1,10 +1,10 @@
 import {applyMiddleware, createStore} from "../redux";
 import combinedReducer from "./reducers";
-import logger1 from "./react-logger1";
-import logger2 from "./react-logger2";
-import logger3 from "./react-logger3";
+import logger from "./react-logger";
+import thunk from './redux-thunk'
+import promise from "./redux-promise";
 
-let store = applyMiddleware(logger1, logger2, logger3)(createStore)(combinedReducer)
+let store = applyMiddleware(logger, thunk, promise)(createStore)(combinedReducer)
 
 // 实现日志功能，重写store.dispatch
 // let dispatch = store.dispatch;
